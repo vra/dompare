@@ -10,7 +10,7 @@ from binaryornot.check import is_binary
 
 
 def parse_parameters():
-    parser = argparse.ArgumentParser('A program to diff files in two directories recursively')
+    parser = argparse.ArgumentParser('A program to diff two directories recursively')
     parser.add_argument('dir1',
                         help="Path to the first directory")
     parser.add_argument('dir2',

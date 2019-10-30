@@ -4,8 +4,8 @@ setup(
     name="dompare",
     version="0.0.1",
     keywords=("dompare", "Linux", 'diff', 'directories'),
-    description="A program to diff files in two directories",
-    long_description="A program to diff files in two directories",
+    description="A program to diff two directories recursively",
+    long_description="dompare is  program to diff same name iles in two directories recursively",
     license="MIT Licence",
 
     url="https://github.com/vra/dompare",
