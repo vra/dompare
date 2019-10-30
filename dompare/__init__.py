@@ -10,7 +10,7 @@ from binaryornot.check import is_binary
 
 
 def parse_parameters():
-    parser = argparse.ArgumentParser('A program to diff files in two directories')
+    parser = argparse.ArgumentParser('A program to diff files in two directories recursively')
     parser.add_argument('dir1',
                         help="Path to the first directory")
     parser.add_argument('dir2',
@@ -18,7 +18,7 @@ def parse_parameters():
     parser.add_argument('--host',
                         type=str,
                         default='localhost',
-                        help="port to listen")
+                        help="host to bind")
     parser.add_argument('--port',
                         type=str,
                         default=5140,
@@ -58,19 +58,20 @@ def diff_two_directories(dir1, dir2, tmp_file):
 
 
 
-def run_http_server(host, port):
-    cmd = 'cd /tmp && python3 -m http.server --bind {} {}'.format(host, port)
+def run_http_server(tmp_dir, host, port):
+    cmd = 'cd {} && python3 -m http.server --bind {} {}'.format(tmp_dir, host, port)
     os.system(cmd)
 
 
 def main():
     tmp_file = tempfile.NamedTemporaryFile(prefix='dompare-', suffix='.html', dir='/tmp')
+    tmp_dir = os.path.dirname(tmp_file.name)
     try:
         args = parse_parameters()
         diff_two_directories(args.dir1, args.dir2, tmp_file)
         url = '{}:{}/{}'.format(args.host, args.port, os.path.basename(tmp_file.name))
         print('\nDone. Please visit {} to see diff file (Press Ctrl-C to stop)'.format(url))
-        run_http_server(args.host, args.port)
+        run_http_server(tmp_dir, args.host, args.port)
     finally:
         tmp_file.close()
 
