@@ -49,7 +49,7 @@ def create_logger(is_verbose):
 
 
 def parse_parameters():
-    parser = argparse.ArgumentParser('A program to diff two directories recursively')
+    parser = argparse.ArgumentParser('dompare')
     parser.add_argument('dir1',
                         help="Path to the first directory")
     parser.add_argument('dir2',

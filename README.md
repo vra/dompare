@@ -28,15 +28,40 @@ You can also use `--host` and `--port` options to change your host and port to l
 ```bash
 dompare folder-a folder-b --host 0.0.0.0 --port 8888
 ```
+By Add `--host 0.0.0.0`, you can visit diff file by url `http://your_ip:port/xxx.html`.
+
+
+you can add `--exclude dir1 dir2` to ignore certain directories:
+```bash
+dompare dir1 dir2 --exclude build out
+```
+
+If you need more detailed information, you can add `--verbose` option.
+
+For all options, run `dompare -h`.
+```bash
+$ dompare -h
+usage: dompare [-h] [--host HOST] [--port PORT] [--verbose]
+               [--exclude EXCLUDE [EXCLUDE ...]]
+               dir1 dir2
+
+positional arguments:
+  dir1                  Path to the first directory
+  dir2                  Path to the second directory
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --host HOST           host to bind
+  --port PORT           port to listen
+  --verbose             Show detailed information
+  --exclude EXCLUDE [EXCLUDE ...]
+                        Ignore listed directories when diff
+```
 
 ## TODO
 There are some ideas I want to do in the future:
-2. [x] Directory ignore relus 
-3. [x] Remove extra 'Legends'
-5. [x] Add `--verbose` option to show more information to debug
-6. [x] Add `--exclude` option to ignore a directory
-4. [ ] More pretty UI to show diff, like font size, scroll bar removing
 1. [ ] Windows support
+2. [ ] More pretty UI to show diff, like font size, scroll bar removing  
 
 ## Contributing
 Any contribution is welcomed. If you find a bug or have any new features, please create an issue or a pull request. 
