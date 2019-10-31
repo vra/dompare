@@ -36,7 +36,7 @@ There are some ideas I want to do in the future:
 3. [ ] Remove extra 'Legends'
 4. [ ] More pretty UI to show diff, like font size, scroll bar removing
 5. [ ] Add `--verbose` option to show more information to debug
-
+6. [ ] Add `--exclude` option to ignore a directory
 ## Contributing
 Any contribution is welcomed. If you find a bug or have any new features, please create an issue or a pull request. 
 
