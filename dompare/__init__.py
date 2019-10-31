@@ -46,6 +46,7 @@ def diff_two_files(path1, path2, root_html_path):
 
 def diff_two_directories(dir1, dir2, tmp_file):
     paths = os.listdir(dir1)
+    if '.git' in paths: paths.remove('.git')
     for path in paths:
         if os.path.isdir(os.path.join(dir1, path)) and not os.path.join(dir1, path).startswith('.'):
             diff_two_directories(os.path.join(dir1, path), os.path.join(dir2, path), tmp_file)
@@ -69,7 +70,7 @@ def main():
     try:
         args = parse_parameters()
         diff_two_directories(args.dir1, args.dir2, tmp_file)
-        url = '{}:{}/{}'.format(args.host, args.port, os.path.basename(tmp_file.name))
+        url = 'http://{}:{}/{}'.format(args.host, args.port, os.path.basename(tmp_file.name))
         print('\nDone. Please visit {} to see diff file (Press Ctrl-C to stop)'.format(url))
         run_http_server(tmp_dir, args.host, args.port)
     finally:
