@@ -37,6 +37,15 @@ dompare dir1 dir2 --exclude build out
 ```
 
 If you need more detailed information, use `--verbose` option.
+```bash
+$ dompare folder-a folder-b --verbose
+[DEBUG] [2019-10-31 15:35:37] [dompare] Processing dir folder-a/doc
+[DEBUG] [2019-10-31 15:35:37] [dompare] Compare folder-a/doc/index.md and folder-b/doc/index.md
+[DEBUG] [2019-10-31 15:35:37] [dompare] Compare folder-a/README.md and folder-b/README.md
+[INFO] [2019-10-31 15:35:37] [dompare] Compare finished. Please visit http://localhost:5140/dompare-paepy47m.html to see diff file (Press Ctrl-C to stop)
+[DEBUG] [2019-10-31 15:35:37] [dompare] Run command: cd /tmp && python3 -m http.server --bind localhost 5140
+Serving HTTP on 127.0.0.1 port 5140 ...
+```
 
 For all options, run `dompare -h`.
 ```bash
