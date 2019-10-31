@@ -29,6 +29,12 @@ You can also use `--host` and `--port` options to change your host and port to l
 dompare folder-a folder-b --host 0.0.0.0 --port 8888
 ```
 
+## TODO
+There are some ideas I want to do in the future:
+[ ] Windows support
+[ ] Directory ignore relus 
+[ ] Remove extra 'Legends'
+[ ] More pretty UI to show diff, like font size, scroll bar removing
 
 ## Contributing
 Any contribution is welcomed. If you find a bug or have any new features, please create an issue or a pull request. 
