@@ -1,10 +1,10 @@
 # dompare
 A command line tool to diff two directories recursively.
 
-## Demo:
+## Demo
 ![Demo](images/dompare-demo.svg)
 
-Then  visit http://localhost:5140/xxx.html, as shown in output, you will see the detailed difference of these two directories:
+Then  visit http://localhost:5140/xxx.html, as shown in output above, you will see the detailed difference of these two directories:
 
 ![Diff Results](images/dompare-screenshot.png)
 
