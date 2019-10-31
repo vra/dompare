@@ -1,1 +1,2 @@
 binaryornot==0.4.4
+coloredlogs==10.0

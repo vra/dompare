@@ -31,12 +31,13 @@ dompare folder-a folder-b --host 0.0.0.0 --port 8888
 
 ## TODO
 There are some ideas I want to do in the future:
-1. [ ] Windows support
-2. [ ] Directory ignore relus 
-3. [ ] Remove extra 'Legends'
+2. [x] Directory ignore relus 
+3. [x] Remove extra 'Legends'
+5. [x] Add `--verbose` option to show more information to debug
+6. [x] Add `--exclude` option to ignore a directory
 4. [ ] More pretty UI to show diff, like font size, scroll bar removing
-5. [ ] Add `--verbose` option to show more information to debug
-6. [ ] Add `--exclude` option to ignore a directory
+1. [ ] Windows support
+
 ## Contributing
 Any contribution is welcomed. If you find a bug or have any new features, please create an issue or a pull request. 
 
