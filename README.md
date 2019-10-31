@@ -28,15 +28,15 @@ You can also use `--host` and `--port` options to change your host and port to l
 ```bash
 dompare folder-a folder-b --host 0.0.0.0 --port 8888
 ```
-By Add `--host 0.0.0.0`, you can visit diff file by url `http://your_ip:port/xxx.html`.
+By Add `--host 0.0.0.0`, you and other people can visit diff file by url `http://your_ip:5140/dompare-xxxxxx.html`.
 
 
-you can add `--exclude dir1 dir2` to ignore certain directories:
+You can add `--exclude dir1 dir2` to ignore certain directories:
 ```bash
 dompare dir1 dir2 --exclude build out
 ```
 
-If you need more detailed information, you can add `--verbose` option.
+If you need more detailed information, use `--verbose` option.
 
 For all options, run `dompare -h`.
 ```bash
