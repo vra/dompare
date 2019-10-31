@@ -10,8 +10,10 @@ Then  visit http://localhost:5140/xxx.html, as shown in output above, you will s
 
 
 ## Features
- 1. Easy to use
- 2. Recursively compare same name files in two directories.
+ 1. Easy to install and use, nice visualization
+ 2. Recursively compare same name files in two directories
+ 3. Optional settings for exclude certain directories
+ 4. Completely based on Python and HTML, no extra tools needed
 
 ## Installation
 ```bash
