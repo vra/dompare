@@ -32,7 +32,7 @@ You can also use `--host` and `--port` options to change your host and port to l
 ```bash
 dompare folder-a folder-b --host 0.0.0.0 --port 8888
 ```
-By Add `--host 0.0.0.0`, you and other people can visit diff file by url `http://your_ip:5140/dompare-xxxxxx.html`.
+By adding `--host 0.0.0.0`, you and other people can visit diff file by url `http://your_ip:5140/dompare-xxxxxx.html`.
 
 
 You can add `--exclude dir1 dir2` to ignore certain directories:
@@ -75,6 +75,7 @@ optional arguments:
 There are some ideas I want to do in the future:
 1. [ ] Windows support
 2. [ ] More pretty UI to show diff, like font size, scroll bar removing  
+3. [ ] Add unit test
 
 ## Contributing
 Any contribution is welcomed. If you find a bug or have any new features, please create an issue or a pull request. 
