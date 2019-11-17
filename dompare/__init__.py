@@ -152,7 +152,7 @@ def run_http_server(logger, tmp_dir, host, port):
 def main():
     args = parse_parameters()
 
-    tmp_file = tempfile.NamedTemporaryFile(prefix='dompare-', suffix='.html', dir='/tmp')
+    tmp_file = tempfile.NamedTemporaryFile(prefix='dompare-', suffix='.html')
     tmp_dir = os.path.dirname(tmp_file.name)
 
     logger = create_logger(args.verbose)
