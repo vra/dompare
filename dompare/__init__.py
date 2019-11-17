@@ -1,5 +1,6 @@
 import argparse
 import difflib
+from http.server import HTTPServer, SimpleHTTPRequestHandler
 import importlib
 import logging
 import logging.config
@@ -76,9 +77,9 @@ def parse_parameters():
 def diff_two_files(path1, path2, root_html_path):
     content1 = ''
     content2 = ''
-    with open(path1) as f:
+    with open(path1, encoding='utf-8') as f:
         content1 = f.readlines()
-    with open(path2) as f:
+    with open(path2, encoding='utf-8') as f:
         content2 = f.readlines()
 
     hd = difflib.HtmlDiff(tabsize=4, wrapcolumn=80)
@@ -88,6 +89,7 @@ def diff_two_files(path1, path2, root_html_path):
     if 'No Differences Found' not in diff_content:
         with open(root_html_path.name, 'a+') as f:
             f.write(diff_content)
+            f.close()
 
 
 
@@ -144,15 +146,16 @@ def add_last_legends(tmp_file):
 
 
 def run_http_server(logger, tmp_dir, host, port):
-    cmd = 'cd {} && python3 -m http.server --bind {} {}'.format(tmp_dir, host, port)
-    logger.debug('Run command: {}'.format(cmd))
-    os.system(cmd)
+    logger.debug('Run http.server in dir: {}, host: {}:{}'.format(tmp_dir, host, port))
+    os.chdir(tmp_dir)
+    httpd = HTTPServer((host, int(port)), SimpleHTTPRequestHandler)
+    httpd.serve_forever()
 
 
 def main():
     args = parse_parameters()
 
-    tmp_file = tempfile.NamedTemporaryFile(prefix='dompare-', suffix='.html')
+    tmp_file = tempfile.NamedTemporaryFile(prefix='dompare-', suffix='.html', delete=False)
     tmp_dir = os.path.dirname(tmp_file.name)
 
     logger = create_logger(args.verbose)
@@ -165,6 +168,7 @@ def main():
         run_http_server(logger, tmp_dir, args.host, args.port)
     finally:
         tmp_file.close()
+        os.remove(tmp_file.name)
 
 
 
