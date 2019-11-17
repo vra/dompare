@@ -73,7 +73,7 @@ optional arguments:
 
 ## TODO
 There are some ideas I want to do in the future:
-1. [x] Windows support (tested on Windows 8.1, python3.7.2)
+1. [x] Windows support (tested on Windows 8.1, Python 3.7.2)
 2. [ ] More pretty UI to show diff, like font size, scroll bar removing  
 3. [ ] Add unit test
 
