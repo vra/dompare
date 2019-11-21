@@ -92,7 +92,6 @@ def diff_two_files(path1, path2, root_html_path):
             f.close()
 
 
-
 def diff_two_directories(logger, dir1, dir2, tmp_file, exclude):
     paths = os.listdir(dir1)
 
@@ -110,7 +109,7 @@ def diff_two_directories(logger, dir1, dir2, tmp_file, exclude):
         path1 = os.path.join(dir1, path)
         path2 = os.path.join(dir2, path)
 
-        if os.path.isdir(path1) and not path1.startswith('.'):
+        if os.path.isdir(path1):
             logger.debug('Processing dir {}'.format(path1))
             diff_two_directories(logger, path1, path2, tmp_file, exclude)
 

@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="dompare",
-    version="0.0.6",
+    version="0.1.0",
     keywords=("dompare", "Linux", 'diff', 'directories'),
     description="A program to diff two directories recursively",
     long_description="dompare is  program to diff same name iles in two directories recursively",
