@@ -1,12 +1,9 @@
 import argparse
 import difflib
 from http.server import HTTPServer, SimpleHTTPRequestHandler
-import importlib
 import logging
 import logging.config
 import os
-import subprocess
-import sys
 import tempfile
 
 import coloredlogs
@@ -131,6 +128,7 @@ def remove_legends(content):
     content = content.replace('summary="Legends"', 'summary="Legends" style="display:none"')
     return content
 
+
 def add_last_legends(tmp_file):
     """ Add legends at the end of diff content. """
     with open(tmp_file.name) as f:
@@ -168,7 +166,6 @@ def main():
     finally:
         tmp_file.close()
         os.remove(tmp_file.name)
-
 
 
 if __name__ == '__main__':
