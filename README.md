@@ -9,7 +9,7 @@ A command line tool to diff two directories recursively.
 <img src="images/dompare-demo.svg">
 </p>
 
-Then  visit http://localhost:5140/xxx.html, as shown in output above, you will see the detailed difference of these two directories:
+Then visit http://localhost:5140/xxx.html, as shown in output above, you will see the detailed difference of these two directories:
 
 ![Diff Results](images/dompare-screenshot.png)
 
