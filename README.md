@@ -58,7 +58,7 @@ dompare dir1 dir2 --exclude build out
 If you need more detailed information, use `--verbose` option.
 
 ```bash
-$ dompare folder-a folder-b --verbose
+dompare folder-a folder-b --verbose
 [DEBUG] [2019-10-31 15:35:37] [dompare] Processing dir folder-a/doc
 [DEBUG] [2019-10-31 15:35:37] [dompare] Compare folder-a/doc/index.md and folder-b/doc/index.md
 [DEBUG] [2019-10-31 15:35:37] [dompare] Compare folder-a/README.md and folder-b/README.md
@@ -69,8 +69,8 @@ Serving HTTP on 127.0.0.1 port 5140 ...
 
 For all options, run `dompare -h`.
 
-```bash
-$ dompare -h
+```text
+dompare -h
 usage: dompare [-h] [--host HOST] [--port PORT] [--verbose]
                [--exclude EXCLUDE [EXCLUDE ...]]
                dir1 dir2
