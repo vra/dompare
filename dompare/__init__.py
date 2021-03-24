@@ -1,3 +1,4 @@
+"""A command line tool to diff two directories recursively."""
 import argparse
 import difflib
 from http.server import HTTPServer, SimpleHTTPRequestHandler
@@ -124,13 +125,13 @@ def diff_two_directories(logger, dir1, dir2, tmp_file, exclude):
 
 
 def remove_legends(content):
-    """ Remove redundant legends """
+    """Remove redundant legends"""
     content = content.replace('summary="Legends"', 'summary="Legends" style="display:none"')
     return content
 
 
 def add_last_legends(tmp_file):
-    """ Add legends at the end of diff content. """
+    """Add legends at the end of diff content."""
     with open(tmp_file.name) as f:
         content = f.read()
 
