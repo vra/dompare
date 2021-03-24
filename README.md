@@ -1,7 +1,7 @@
 
 # dompare
 
-![example workflow](https://github.com/vra/dompare/actions/workflows/python-package.yml/badge.svg)
+[![BUILD](https://github.com/vra/dompare/actions/workflows/python-package.yml/badge.svg)](https://github.com/vra/dompare/actions)
 
 A command line tool to diff two directories recursively.
 
