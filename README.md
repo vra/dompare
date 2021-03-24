@@ -29,13 +29,14 @@ pip3 install dompare
 ```
 
 ## Using dompare
-
+### Basic usage
 ```bash
 dompare folder-a folder-b
 ```
 
 Then open your webbrowser and visit `http://localhost:5140`, you will see the difference information of `folder-a` and `folder-b`.
 
+### Public access
 You can also use `--host` and `--port` options to change your host and port to listen:
 
 ```bash
@@ -44,11 +45,15 @@ dompare folder-a folder-b --host 0.0.0.0 --port 8888
 
 By adding `--host 0.0.0.0`, you and other people can visit diff file by url `http://your_ip:5140/dompare-xxxxxx.html`.
 
-You can add `--exclude dir1 dir2` to ignore certain directories:
+### Exclude binary folders
+
+You can add `--exclude dir1 dir2` to ignore certain directories (e.g., temporal folders, folders with binary files):
 
 ```bash
 dompare dir1 dir2 --exclude build out
 ```
+
+### Verbose mode
 
 If you need more detailed information, use `--verbose` option.
 
@@ -89,7 +94,6 @@ There are some ideas I want to do in the future:
 
 1. [x] Windows support (tested on Windows 8.1, Python 3.7.2)
 2. [ ] More pretty UI to show diff, like font size, scroll bar removing  
-3. [ ] Add unit test
 
 ## Contributing
 
@@ -97,4 +101,4 @@ Any contribution is welcomed. If you find a bug or have any new features, please
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE) © Yunfeng Wang
