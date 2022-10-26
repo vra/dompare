@@ -19,7 +19,7 @@ def create_logger(is_verbose):
     FIELD_STYLES = dict(
         asctime=dict(color='red'),
         hostname=dict(color='magenta'),
-        levelname=dict(color='yellow', bold=coloredlogs.CAN_USE_BOLD_FONT),
+        levelname=dict(color='yellow'),
         filename=dict(color='magenta'),
         name=dict(color='blue'),
         threadName=dict(color='green')
@@ -30,7 +30,7 @@ def create_logger(is_verbose):
         info=dict(color='cyan'),
         warning=dict(color='red'),
         error=dict(color='red'),
-        critical=dict(color='red', bold=coloredlogs.CAN_USE_BOLD_FONT)
+        critical=dict(color='red')
     )
 
     logger = logging.getLogger('dompare')
