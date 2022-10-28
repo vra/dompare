@@ -58,13 +58,25 @@ def parse_parameters():
         "--verbose", action="store_true", help="Show detailed information"
     )
     parser.add_argument(
+        "--exclude-dot",
+        action="store_true",
+        dest="exclude_dot",
+        help="Ignore All hidden folders and files beginning with .",
+    )
+    parser.add_argument(
+        "--show-same",
+        action="store_true",
+        dest="show_same",
+        help="Show files that no difference in html file",
+    )
+    parser.add_argument(
         "--exclude", type=str, nargs="+", help="Ignore listed directories when diff"
     )
 
     return parser.parse_args()
 
 
-def diff_two_files(path1, path2, root_html_path):
+def diff_two_files(path1, path2, root_html_path, show_same):
     content1 = ""
     content2 = ""
     with open(path1, encoding="utf-8") as f:
@@ -103,7 +115,9 @@ def diff_two_directories(logger, dir1, dir2, tmp_file, exclude):
 
         if os.path.isdir(path1):
             logger.debug("Processing dir {}".format(path1))
-            diff_two_directories(logger, path1, path2, tmp_file, exclude)
+            diff_two_directories(
+                logger, path1, path2, tmp_file, exclude, exclude_dot, show_same
+            )
 
         elif is_binary(path1):
             logger.debug("Ignore binary file {}".format(path1))
@@ -117,7 +131,9 @@ def diff_two_directories(logger, dir1, dir2, tmp_file, exclude):
 
         else:
             logger.debug("Compare {} and {}".format(path1, path2))
-            diff_two_files(os.path.join(dir1, path), os.path.join(dir2, path), tmp_file)
+            diff_two_files(
+                os.path.join(dir1, path), os.path.join(dir2, path), tmp_file, show_same
+            )
 
 
 def remove_legends(content):
@@ -136,6 +152,9 @@ def add_last_legends(tmp_file):
     ptn = 'style="display:none"'
     pos = content.rfind(ptn)
     content = content[:pos] + content[pos + len(ptn) :]
+
+    if content == "":
+        content = "No diff is found"
 
     with open(tmp_file.name, "w") as f:
         f.write(content)
@@ -159,7 +178,15 @@ def main():
     logger = create_logger(args.verbose)
 
     try:
-        diff_two_directories(logger, args.dir1, args.dir2, tmp_file, args.exclude)
+        diff_two_directories(
+            logger,
+            out_dir1,
+            out_dir2,
+            tmp_file,
+            args.exclude,
+            args.exclude_dot,
+            args.show_same,
+        )
         add_last_legends(tmp_file)
         url = "http://{}:{}/{}".format(
             args.host, args.port, os.path.basename(tmp_file.name)
