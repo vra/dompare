@@ -90,24 +90,43 @@ def diff_two_files(path1, path2, root_html_path, show_same):
     )
     diff_content = remove_legends(diff_content)
 
-    if "No Differences Found" not in diff_content:
+    need_write = True if show_same else "No Differences Found" not in diff_content
+    if need_write:
         with open(root_html_path.name, "a+") as f:
             f.write(diff_content)
             f.close()
 
 
-def diff_two_directories(logger, dir1, dir2, tmp_file, exclude):
-    paths = os.listdir(dir1)
-
+def diff_two_directories(logger, dir1, dir2, tmp_file, exclude, exclude_dot, show_same):
     if exclude is not None:
         exclude += [".git"]
     else:
         exclude = [".git"]
 
-    for ex in exclude:
-        if ex in paths:
-            logger.debug("Ignore {}".format(ex))
-            paths.remove(ex)
+    # Add comparsion betwen two files
+    if os.path.isfile(dir1) and os.path.isfile(dir2):
+        target_path = os.path.basename(dir1)
+        target_path1 = os.path.basename(dir2)
+        assert (
+            target_path == target_path1
+        ), "dompare only support files with the same name!"
+        dir1 = os.path.dirname(dir1)
+        dir2 = os.path.dirname(dir2)
+        all_paths = os.listdir(dir1)
+        for path in all_paths:
+            if path != target_path:
+                exclude.append(path)
+
+        paths = [target_path]
+
+    else:
+        paths = os.listdir(dir1)
+        if exclude_dot:
+            paths = [path for path in paths if not path.startswith(".")]
+        for ex in exclude:
+            if ex in paths:
+                logger.debug("Ignore {}".format(ex))
+                paths.remove(ex)
 
     for path in paths:
         path1 = os.path.join(dir1, path)
@@ -169,6 +188,12 @@ def run_http_server(logger, tmp_dir, host, port):
 
 def main():
     args = parse_parameters()
+
+    out_dir1 = os.path.realpath(args.dir1)
+    out_dir2 = os.path.realpath(args.dir2)
+
+    assert os.path.exists(out_dir1), "path1 {} is not exist!".format(out_dir1)
+    assert os.path.exists(out_dir2), "path2 {} is not exist!".format(out_dir2)
 
     tmp_file = tempfile.NamedTemporaryFile(
         prefix="dompare-", suffix=".html", delete=False
