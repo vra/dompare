@@ -59,7 +59,7 @@ def parse_parameters():
                         help="host to bind")
     parser.add_argument('--port',
                         type=str,
-                        default=5140,
+                        default=5240,
                         help="port to listen")
     parser.add_argument('--verbose',
                         action='store_true',
