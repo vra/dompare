@@ -76,13 +76,24 @@ def parse_parameters():
     return parser.parse_args()
 
 
+def detect_file_encoding(path):
+    import chardet
+
+    with open(path, "rb") as f:
+        return chardet.detect(f.read())["encoding"]
+
+
 def diff_two_files(path1, path2, root_html_path, show_same):
     content1 = ""
     content2 = ""
-    with open(path1, encoding="utf-8") as f:
-        content1 = f.readlines()
-    with open(path2, encoding="utf-8") as f:
-        content2 = f.readlines()
+    try:
+        with open(path1, encoding=detect_file_encoding(path1)) as f:
+            content1 = f.readlines()
+        with open(path2, encoding=detect_file_encoding(path2)) as f:
+            content2 = f.readlines()
+    except UnicodeDecodeError:
+        logger.warning("Open file error: {}".format(path1))
+        return
 
     hd = difflib.HtmlDiff(tabsize=4, wrapcolumn=80)
     diff_content = hd.make_file(
