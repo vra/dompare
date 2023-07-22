@@ -98,9 +98,6 @@ def diff_two_directories(dir1, dir2, tmp_file, exclude, exclude_dot, show_same):
     if os.path.isfile(dir1) and os.path.isfile(dir2):
         target_path = os.path.basename(dir1)
         target_path1 = os.path.basename(dir2)
-        assert (
-            target_path == target_path1
-        ), "dompare only support files with the same name!"
         dir1 = os.path.dirname(dir1)
         dir2 = os.path.dirname(dir2)
         all_paths = os.listdir(dir1)
