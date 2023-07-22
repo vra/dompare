@@ -1,7 +1,7 @@
 # Changelog
 
-(v0_2_0)=
-## 0.2.0 (2023-07-22)
+(v0_2_1)=
+## 0.2.1 (2023-07-22)
 
 ### New features
 - Enable file comparson with different names
