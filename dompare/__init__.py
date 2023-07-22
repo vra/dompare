@@ -11,6 +11,23 @@ import coloredlogs
 from binaryornot.check import is_binary
 
 
+def is_binary_string(filename):
+    with open(filename, "rb") as f:
+        bytes = f.read(1024)
+        textchars = bytearray(
+            {7, 8, 9, 10, 12, 13, 27} | set(range(0x20, 0x100)) - {0x7F}
+        )
+        return bool(bytes.translate(None, textchars))
+
+
+def is_binary_file(filename):
+    with open(filename, "rb") as f:
+        # Read the first 1024 bytes of the file
+        data = f.read(1024)
+        # Check for null bytes
+        return b"\0" in data
+
+
 def create_logger(is_verbose):
     # Suppress logging info from third-party packages
     logging.getLogger("binaryornot").setLevel(logging.ERROR)
@@ -149,7 +166,11 @@ def diff_two_directories(logger, dir1, dir2, tmp_file, exclude, exclude_dot, sho
                 logger, path1, path2, tmp_file, exclude, exclude_dot, show_same
             )
 
-        elif is_binary(path1):
+        elif os.path.islink(path1):
+            logger.debug("Ignore symlink file {}".format(path1))
+            continue
+
+        elif is_binary(path1) or is_binary_file(path1) or is_binary_string(path1):
             logger.debug("Ignore binary file {}".format(path1))
             continue
 
