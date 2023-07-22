@@ -49,26 +49,29 @@ def create_logger(is_verbose):
 
 
 def parse_parameters():
-    parser = argparse.ArgumentParser('dompare')
-    parser.add_argument('dir1',
-                        help="Path to the first directory")
-    parser.add_argument('dir2',
-                        help="Path to the second directory")
-    parser.add_argument('--host',
-                        type=str,
-                        default='localhost',
-                        help="host to bind")
-    parser.add_argument('--port',
-                        type=str,
-                        default=5240,
-                        help="port to listen")
-    parser.add_argument('--verbose',
-                        action='store_true',
-                        help='Show detailed information')
-    parser.add_argument('--exclude',
-                        type=str,
-                        nargs='+',
-                        help='Ignore listed directories when diff')
+    parser = argparse.ArgumentParser("dompare")
+    parser.add_argument("dir1", help="Path to the first directory")
+    parser.add_argument("dir2", help="Path to the second directory")
+    parser.add_argument("--host", type=str, default="localhost", help="host to bind")
+    parser.add_argument("--port", type=str, default=5240, help="port to listen")
+    parser.add_argument(
+        "-v", "--verbose", action="store_true", help="Show detailed information"
+    )
+    parser.add_argument(
+        "--exclude-dot",
+        action="store_true",
+        dest="exclude_dot",
+        help="Ignore All hidden folders and files beginning with .",
+    )
+    parser.add_argument(
+        "--show-same",
+        action="store_true",
+        dest="show_same",
+        help="Show files that no difference in html file",
+    )
+    parser.add_argument(
+        "--exclude", type=str, nargs="+", help="Ignore listed directories when diff"
+    )
 
     return parser.parse_args()
 
