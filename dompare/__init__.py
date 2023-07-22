@@ -119,6 +119,17 @@ def diff_two_directories(dir1, dir2, tmp_file, exclude, exclude_dot, show_same):
     for path in paths:
         path1 = os.path.join(dir1, path)
         path2 = os.path.join(dir2, path)
+        need_skip = False
+        for ex in exclude:
+            if ex in path1:
+                need_skip = True
+                break
+            if ex in path1:
+                need_skip = True
+                break
+        if need_skip:
+            logger.debug("Ignore {}".format(path1))
+            continue
 
         if os.path.isdir(path1):
             logger.debug("Processing dir {}".format(path1))
