@@ -50,7 +50,11 @@ def parse_parameters():
         help="Show files that no difference in html file",
     )
     parser.add_argument(
-        "--exclude", type=str, nargs="+", help="Ignore listed directories when diff"
+        "-e",
+        "--exclude",
+        type=str,
+        nargs="+",
+        help="Ignore listed directories when diff",
     )
 
     return parser.parse_args()
