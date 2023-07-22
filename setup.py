@@ -15,7 +15,7 @@ setup(
     platforms="any",
     install_requires=[
         "binaryornot>=0.4.4",
-        "coloredlogs>=10.0",
+        "loguru",
     ],
     scripts=[],
     entry_points={"console_scripts": ["dompare=dompare.__init__:main"]},

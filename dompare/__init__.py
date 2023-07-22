@@ -3,12 +3,12 @@ import argparse
 import difflib
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 import logging
-import logging.config
 import os
+import sys
 import tempfile
 
-import coloredlogs
 from binaryornot.check import is_binary
+from loguru import logger
 
 
 def is_binary_string(filename):
@@ -26,43 +26,6 @@ def is_binary_file(filename):
         data = f.read(1024)
         # Check for null bytes
         return b"\0" in data
-
-
-def create_logger(is_verbose):
-    # Suppress logging info from third-party packages
-    logging.getLogger("binaryornot").setLevel(logging.ERROR)
-    logging.getLogger("chardet").setLevel(logging.ERROR)
-
-    FIELD_STYLES = dict(
-        asctime=dict(color="red"),
-        hostname=dict(color="magenta"),
-        levelname=dict(color="yellow"),
-        filename=dict(color="magenta"),
-        name=dict(color="blue"),
-        threadName=dict(color="green"),
-    )
-
-    LEVEL_STYLES = dict(
-        debug=dict(color="white"),
-        info=dict(color="cyan"),
-        warning=dict(color="red"),
-        error=dict(color="red"),
-        critical=dict(color="red"),
-    )
-
-    logger = logging.getLogger("dompare")
-    level = "DEBUG" if is_verbose else "INFO"
-    logging_level = logging.DEBUG if is_verbose else logging.INFO
-    logger.setLevel(logging_level)
-
-    coloredlogs.install(
-        level=level,
-        fmt="[%(levelname)s] [%(asctime)s] [%(name)s] %(message)s",
-        level_styles=LEVEL_STYLES,
-        field_styles=FIELD_STYLES,
-    )
-
-    return logger
 
 
 def parse_parameters():
@@ -125,7 +88,7 @@ def diff_two_files(path1, path2, root_html_path, show_same):
             f.close()
 
 
-def diff_two_directories(logger, dir1, dir2, tmp_file, exclude, exclude_dot, show_same):
+def diff_two_directories(dir1, dir2, tmp_file, exclude, exclude_dot, show_same):
     if exclude is not None:
         exclude += [".git"]
     else:
@@ -163,7 +126,7 @@ def diff_two_directories(logger, dir1, dir2, tmp_file, exclude, exclude_dot, sho
         if os.path.isdir(path1):
             logger.debug("Processing dir {}".format(path1))
             diff_two_directories(
-                logger, path1, path2, tmp_file, exclude, exclude_dot, show_same
+                path1, path2, tmp_file, exclude, exclude_dot, show_same
             )
 
         elif os.path.islink(path1):
@@ -211,7 +174,7 @@ def add_last_legends(tmp_file):
         f.write(content)
 
 
-def run_http_server(logger, tmp_dir, host, port):
+def run_http_server(tmp_dir, host, port):
     logger.debug("Run http.server in dir: {}, host: {}:{}".format(tmp_dir, host, port))
     os.chdir(tmp_dir)
     httpd = HTTPServer((host, int(port)), SimpleHTTPRequestHandler)
@@ -221,6 +184,13 @@ def run_http_server(logger, tmp_dir, host, port):
 def main():
     args = parse_parameters()
 
+    logger.remove()
+    if args.verbose:
+        logger.add(sys.stdout, level="DEBUG")
+    else:
+        logger.add(sys.stdout, level="INFO")
+
+    logger.info("Running, please wait...")
     out_dir1 = os.path.realpath(args.dir1)
     out_dir2 = os.path.realpath(args.dir2)
 
@@ -232,11 +202,8 @@ def main():
     )
     tmp_dir = os.path.dirname(tmp_file.name)
 
-    logger = create_logger(args.verbose)
-
     try:
         diff_two_directories(
-            logger,
             out_dir1,
             out_dir2,
             tmp_file,
@@ -253,7 +220,7 @@ def main():
                 url
             )
         )
-        run_http_server(logger, tmp_dir, args.host, args.port)
+        run_http_server(tmp_dir, args.host, args.port)
     finally:
         tmp_file.close()
         os.remove(tmp_file.name)
