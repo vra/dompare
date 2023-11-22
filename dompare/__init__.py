@@ -5,6 +5,7 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 import logging
 import os
 import sys
+import shutil
 import tempfile
 
 from binaryornot.check import is_binary
@@ -32,8 +33,15 @@ def parse_parameters():
     parser = argparse.ArgumentParser("dompare")
     parser.add_argument("dir1", help="Path to the first directory")
     parser.add_argument("dir2", help="Path to the second directory")
-    parser.add_argument("--host", type=str, default="localhost", help="host to bind")
-    parser.add_argument("--port", type=str, default=5240, help="port to listen")
+    parser.add_argument(
+        "-o",
+        "--output_path",
+        type=str,
+        default=None,
+        help="The path to save result file (html)",
+    )
+    parser.add_argument("-b", "--host", type=str, default="localhost", help="host to bind")
+    parser.add_argument("-p", "--port", type=str, default=5240, help="port to listen")
     parser.add_argument(
         "-v", "--verbose", action="store_true", help="Show detailed information"
     )
@@ -205,6 +213,9 @@ def main():
     logger.info("Running, please wait...")
     out_dir1 = os.path.realpath(args.dir1)
     out_dir2 = os.path.realpath(args.dir2)
+    output_path = (
+        os.path.realpath(args.output_path) if args.output_path is not None else None
+    )
 
     assert os.path.exists(out_dir1), "path1 {} is not exist!".format(out_dir1)
     assert os.path.exists(out_dir2), "path2 {} is not exist!".format(out_dir2)
@@ -224,15 +235,20 @@ def main():
             args.show_same,
         )
         add_last_legends(tmp_file)
-        url = "http://{}:{}/{}".format(
-            args.host, args.port, os.path.basename(tmp_file.name)
-        )
-        logger.info(
-            "Compare finished. Please visit {} to see diff file (Press Ctrl-C to stop)".format(
-                url
+
+        if output_path is not None:
+            shutil.copy(tmp_file.name, output_path)
+            logger.info(f"Write diffs to {output_path}")
+        else:
+            url = "http://{}:{}/{}".format(
+                args.host, args.port, os.path.basename(tmp_file.name)
             )
-        )
-        run_http_server(tmp_dir, args.host, args.port)
+            logger.info(
+                "Compare finished. Please visit {} to see diff file (Press Ctrl-C to stop)".format(
+                    url
+                )
+            )
+            run_http_server(tmp_dir, args.host, args.port)
     finally:
         tmp_file.close()
         os.remove(tmp_file.name)
